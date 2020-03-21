@@ -48,6 +48,17 @@ var Juego = {
     update: function(){        
         fondoJ.tilePosition.x -= 1;
         juego.physics.arcade.overlap(person, obs, this.tocoObstaculo, null, this);
+	if(person.body.y == 0 || person.body.y == 513){
+		if(person.alive == false)
+			return;
+		person.alive = false;
+		juego.time.events.remove(timer);
+			
+		obs.forEachAlive(function(o){
+			o.body.velocity.x = 0;
+		}, this);
+		this.state.start('Fin');
+	}
     },
     
     saltar: function(){
