@@ -37,7 +37,7 @@ var Juego = {
 		pausa = juego.input.keyboard.addKey(Phaser.Keyboard.ESC);
             pausa.onDown.add(this.pausar, this);
 			
-        timer = juego.time.events.loop(2000, this.crearObstaculos, this);
+        timer = juego.time.events.loop(1200, this.crearObstaculos, this);
         
         puntos = 0;
         txtPuntos =juego.add.text(20, 20, "0", {font: "30px Arial", fill: "#FFF"});
