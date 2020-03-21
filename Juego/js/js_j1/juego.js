@@ -51,7 +51,7 @@ var Juego = {
     },
     
     saltar: function(){
-        person.body.velocity.y = -300;
+        person.body.velocity.y = -500;
 		if (juego.paused && txtInicio.text == "Presione espacio para empezar"){
 			juego.paused = false;
 			txtInicio.text = "";
