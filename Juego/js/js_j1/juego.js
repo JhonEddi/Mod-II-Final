@@ -5,6 +5,8 @@ var salto;
 var timer;
 var puntos;
 var txtPuntos;
+var txtInicio;
+var pausa;
 
 var Juego = {    
     
@@ -20,23 +22,27 @@ var Juego = {
     create: function(){
         
         fondoJ = juego.add.tileSprite(0, 0, 1070, 575, 'fondo');     
-        person = juego.add.sprite(50 , 500, 'personaje');
-            person.scale.setTo(0.3);
+        person = juego.add.sprite(50 , juego.height/2, 'personaje');
+            person.scale.setTo(0.25);
         juego.physics.startSystem(Phaser.Physics.ARCADE);
             juego.physics.arcade.enable(person);
             person.body.collideWorldBounds = true;
             person.body.gravity.y = 2000;
             obs = juego.add.group();
             obs.enableBody = true;
-            obs.createMultiple(1000, 'obstaculo');
+            obs.createMultiple(100, 'obstaculo');
         salto = juego.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
             salto.onDown.add(this.saltar, this);
         
-        timer = juego.time.events.loop(700, this.crearObstaculos, this);
+		pausa = juego.input.keyboard.addKey(Phaser.Keyboard.ESC);
+            pausa.onDown.add(this.pausar, this);
+			
+        timer = juego.time.events.loop(3000, this.crearObstaculos, this);
         
-        puntos = -1;
+        puntos = 0;
         txtPuntos =juego.add.text(20, 20, "0", {font: "30px Arial", fill: "#FFF"});
-       
+		txtInicio =juego.add.text(juego.width / 2, juego.height / 2, "Presione espacio para empezar", {font: "30px Arial", fill: "#FFF"});
+		juego.paused = true;
     },
     
     update: function(){        
@@ -45,18 +51,43 @@ var Juego = {
     },
     
     saltar: function(){
-        person.body.velocity.y = -400;
+        person.body.velocity.y = -300;
+		if (juego.paused && txtInicio.text == "Presione espacio para empezar"){
+			juego.paused = false;
+			txtInicio.text = "";
+		}
     },
     
-    
+    pausar: function(){
+		if (juego.paused){
+			juego.paused = false;
+			txtInicio.text = "";
+		}else if (juego.paused == false){
+			juego.paused = true;
+			txtInicio.text = "Pausa";
+		}
+    },
+	
     crearObstaculos: function(){
         
         for( var i = 0; i < 1; i++){
-            
-            this.crearUnObstaculo(1000, i+Math.floor((Math.random()*470))+10);
+            var carril = i+Math.floor((Math.random()*6))
+			if(carril == 0){
+				this.crearUnObstaculo(1000, 30);
+			}else if(carril == 1){
+				this.crearUnObstaculo(1000, 118);
+			}else if(carril == 2){
+				this.crearUnObstaculo(1000, 206);
+			}else if(carril == 3){
+				this.crearUnObstaculo(1000, 294);
+			}else if(carril == 4){
+				this.crearUnObstaculo(1000, 382);
+			}else if(carril == 5){
+				this.crearUnObstaculo(1000, 470);
+			}
+			
         }
-        
-        puntos += 1;
+		puntos += 1;
         txtPuntos.text = puntos;
     },
     

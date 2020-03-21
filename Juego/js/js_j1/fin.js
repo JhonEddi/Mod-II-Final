@@ -3,14 +3,14 @@ var Fin = {
     
     preload: function(){
         juego.stage.backgroundColor = '#FFFFFF';
-        
+        juego.load.image('retry', 'img/img_j1/retry.jpg');
     },
     
     create: function(){
-        boton = this.add.button(juego.width/2,juego.height/2, 'boton',this.iniciarJuego, this);
+        boton = this.add.button(juego.width/2,juego.height/2, 'retry',this.iniciarJuego, this);
         boton.anchor.setTo(0.5);
         boton.scale.setTo(0.5);
-        
+		
         var txtEtiqueta = juego.add.text(juego.width/2 -10, juego.height/2 -55, "Puntos:", 
                                         {font: "bold 24px sans-serif", fill:"black", aling:"center"});
                                         txtEtiqueta.anchor.setTo(0.5);
@@ -23,7 +23,6 @@ var Fin = {
     },
     
     iniciarJuego: function(){
-        
         this.state.start('Juego');
     }
 }
